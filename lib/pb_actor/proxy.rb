@@ -86,11 +86,13 @@ module PbActor
     def terminate
       Message.send [:terminate], @wr
       Process.wait @pid
+      nil
     end
 
     def terminate!
       Process.kill "KILL", @pid
       Process.wait @pid
+      nil
     end
   end
 
