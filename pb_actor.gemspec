@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["jjyruby@gmail.com"]
   spec.description   = %q{Process based Actor.}
   spec.summary       = %q{Just for fun.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/jjyr/pb_actor"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
