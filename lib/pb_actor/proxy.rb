@@ -9,12 +9,12 @@ module PbActor
       class << self
         def send msg, wr
           Marshal.dump(msg, wr)
+        rescue Errno::EPIPE => e
+          raise DeadActorError, 'dead actor call'
         end
 
         def recv rd
           Marshal.load rd
-        rescue
-          puts "error"
         end
       end
     end
@@ -49,10 +49,6 @@ module PbActor
       cr, pw = IO.pipe
       @pid = fork do
         [pr, pw].each &:close
-        Signal.trap("HUP") {
-          puts "#{@pid} terminate"
-          exit
-        }
         loop do
           type, method, *args = Message.recv cr
           case type
@@ -93,7 +89,8 @@ module PbActor
     end
 
     def terminate!
-      Process.kill "HUP", @pid
+      Process.kill "KILL", @pid
+      Process.wait @pid
     end
   end
 

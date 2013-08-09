@@ -6,10 +6,10 @@ require 'pb_actor/version'
 Gem::Specification.new do |spec|
   spec.name          = "pb_actor"
   spec.version       = PbActor::VERSION
-  spec.authors       = ["TODO: Write your name"]
+  spec.authors       = ["jjy"]
   spec.email         = ["jjyruby@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{Process based Actor.}
+  spec.summary       = %q{Just for fun.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
