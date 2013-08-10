@@ -50,6 +50,13 @@ describe PbActor do
     @test.bar.should == 'bar'
   end
 
+  it 'future call should work' do
+    params = [1, 2, 3]
+    futures = params.map{ |n| @test.future.hello n }
+    futures.each{ |f| f.should.is_a? PbActor::Future }
+    futures.map(&:value).should == params.map{ |n| "hello #{n}"}
+  end
+
   it 'terminate should work' do
     @test.alive?.should == true
     @test.terminate
@@ -69,5 +76,6 @@ describe PbActor do
   it 'to_s should correct' do
     @test.to_s.should == 'PbActor::Proxy(Test)'
     @test.async.to_s.should == 'PbActor::AsyncProxy(Test)'
+    @test.future.to_s.should == 'PbActor::FutureProxy(Test)'
   end
 end
