@@ -90,11 +90,11 @@ module PbActor
     end
 
     def async
-      AsyncProxy.new @origin, @pid, @wr, @rd
+      @async ||= AsyncProxy.new @origin, @pid, @wr, @rd
     end
 
     def future
-      FutureProxy.new @origin, @pid, @wr, @rd
+      @future ||= FutureProxy.new @origin, @pid, @wr, @rd
     end
 
     def terminate
