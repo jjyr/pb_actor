@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 require "pb_actor/version"
-require "pb_actor/proxy"
 
 module PbActor
   class << self
     def included base
-      base.send :include, InstanceMethods
       base.send :extend, ClassMethods
     end
   end
@@ -19,6 +17,8 @@ module PbActor
     end
   end
 
-  module InstanceMethods
+  class DeadActorError < StandardError
   end
 end
+
+require "pb_actor/proxy"
