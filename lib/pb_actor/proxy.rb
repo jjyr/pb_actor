@@ -56,7 +56,11 @@ module PbActor
         [pr, pw].each &:close
         @future_values = {}
         loop do
-          type, id, method, *args = Message.recv cr
+          type, id, method, *args = begin
+                                      Message.recv cr
+                                    rescue EOFError => e
+                                      [:terminate]
+                                    end
           case type
           when :async_method_call
             @origin.public_send method, *args
