@@ -20,6 +20,7 @@ Or install it yourself as:
 
 ```ruby
 require 'pb_actor'
+require 'benchmark'
 
 class Test
   include PbActor
@@ -36,22 +37,36 @@ class Test
   end
 end
 
-f = Test.new
+t = Test.new
 #=> <PbActor::Proxy:0x00000002106448 @origin=#<Test:0x00000002106470>, @pid=23487, @rd=#<IO:fd 7>, @wr=#<IO:fd 10>>
 
-f.alive?
+t.alive?
 #=> true
 
-f.fib(30)
+t.fib(30)
 #=> 1346269
 
-f.async.p_fib(30)
+t.async.p_fib(30)
 #=> nil
 # 1346269
 
-f.terminate
-f.alive?
+t.terminate
+t.alive?
 #=> false
+
+def fib n
+  if n < 2
+    1
+  else
+    fib(n - 1) + fib(n - 2)
+  end
+end
+
+Benchmark.bm do |bm|
+  bm.report{puts (30..35).map{|n| fib(n)}.reduce(:+)}
+  bm.report{puts (30..35).map{|n| Test.new.future.fib(n)}.map(&:value).reduce(:+)}
+end
+#=> Try it youself!
 ```
 
 ## Contributing
