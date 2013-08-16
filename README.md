@@ -1,4 +1,4 @@
-# PbActor
+# PbActor  [![Build Status](https://travis-ci.org/jjyr/pb_actor.png?branch=master)](https://travis-ci.org/jjyr/pb_actor)
 
 Process based Actor.
 
