@@ -7,10 +7,9 @@ module PbActor
     end
 
     def alive?
-      # Have any other way to check a process status?
-      !timeout(0.001){@rd.eof?}
-    rescue Timeout::Error => e
-      true
+      !Process.waitpid @pid, Process::WNOHANG
+    rescue Errno::ECHILD => e
+      false
     end
 
     def method_missing method, *args, &blk
