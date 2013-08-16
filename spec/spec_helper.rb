@@ -1,4 +1,5 @@
 require 'pb_actor'
+require 'timeout'
 
 def wait_until wait_time = 3
   timeout wait_time do

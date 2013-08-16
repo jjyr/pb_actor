@@ -1,5 +1,3 @@
-require 'timeout'
-
 module PbActor
   class BasicProxy
     def initialize origin, pid, wr, rd
