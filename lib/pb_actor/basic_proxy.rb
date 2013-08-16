@@ -4,12 +4,17 @@ module PbActor
   class BasicProxy
     def initialize origin, pid, wr, rd
       @origin, @pid, @wr, @rd = origin, pid, wr, rd
+      @alive = true
     end
 
     def alive?
-      !Process.waitpid @pid, Process::WNOHANG
+      if !@alive || (!Process.waitpid @pid, Process::WNOHANG)
+        @alive
+      else
+        @alive = false
+      end
     rescue Errno::ECHILD => e
-      false
+      @alive = false
     end
 
     def method_missing method, *args, &blk

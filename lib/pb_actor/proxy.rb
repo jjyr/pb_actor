@@ -39,6 +39,7 @@ module PbActor
       [cr, cw].each &:close
       @rd = pr
       @wr = pw
+      @alive = true
     end
 
     def method_missing method, *args, &blk
