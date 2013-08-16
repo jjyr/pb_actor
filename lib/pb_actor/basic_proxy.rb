@@ -14,7 +14,7 @@ module PbActor
 
     def method_missing method, *args, &blk
       raise ArgumentError, 'actor not support block' if blk
-      raise DeadActorError, 'dead actor call' unless alive?
+      raise DeadActorError, PbActor.dead_actor_msg unless alive?
     end
 
     def to_s

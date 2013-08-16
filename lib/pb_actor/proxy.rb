@@ -55,15 +55,21 @@ module PbActor
     end
 
     def terminate
+      raise DeadActorError, PbActor.dead_actor_msg unless alive?
       Message.send [:terminate], @wr
       Process.wait @pid
       nil
+    rescue Errno::ECHILD => e
+      raise DeadActorError, PbActor.dead_actor_msg
     end
 
     def terminate!
+      raise DeadActorError, PbActor.dead_actor_msg unless alive?
       Process.kill "KILL", @pid
       Process.wait @pid
       nil
+    rescue Errno::ECHILD, Errno::ESRCH => e
+      raise DeadActorError, PbActor.dead_actor_msg
     end
   end
 end

@@ -6,6 +6,10 @@ module PbActor
     def included base
       base.send :extend, ClassMethods
     end
+
+    def dead_actor_msg
+      'dead actor call'
+    end
   end
 
   module ClassMethods

@@ -62,6 +62,7 @@ describe PbActor do
     @test.terminate
     @test.alive?.should == false
     expect{@test.foo}.to raise_error(PbActor::DeadActorError)
+    expect{@test.terminate}.to raise_error(PbActor::DeadActorError)
   end
 
   it 'terminate! should work' do
@@ -71,6 +72,7 @@ describe PbActor do
       @test.alive? == false
     end
     @test.alive?.should == false
+    expect{@test.terminate!}.to raise_error(PbActor::DeadActorError)
   end
 
   it 'to_s should correct' do
